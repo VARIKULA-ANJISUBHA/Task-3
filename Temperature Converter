@@ -1,0 +1,104 @@
+<html>
+<head>
+  <title>Temperature Converter</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      text-align: center;
+    }
+
+    h1 {
+      color: black;
+    }
+
+    .container {
+      margin: 20px auto;
+      width: 300px;
+    }
+
+    label {
+      display: block;
+      margin-bottom: 10px;
+    }
+
+    input[type="number"] {
+      width: 100%;
+      padding: 5px;
+      margin-bottom: 10px;
+    }
+
+    select {
+      width: 100%;
+      padding: 5px;
+      margin-bottom: 10px;
+    }
+
+    button {
+      padding: 10px 20px;
+      background-color: grey;
+      color: white;
+      border: none;
+      cursor: pointer;
+    }
+
+    #result {
+      margin-top: 20px;
+      font-size: 20px;
+      color: #333;
+    }
+  </style>
+</head>
+<body>
+  <h1>Temperature Converter</h1>
+  <div class="container">
+    <label for="temperature">Temperature:</label>
+    <input type="number" id="temperature" required>
+
+    <label for="unit">Unit:</label>
+    <select id="unit">
+      <option value="celsius">Celsius</option>
+      <option value="fahrenheit">Fahrenheit</option>
+      <option value="kelvin">Kelvin</option>
+    </select>
+
+    <button onclick="convertTemperature()">Convert</button>
+
+    <div id="result"></div>
+  </div>
+
+  <script>
+    function convertTemperature() {
+      var temperature = document.getElementById("temperature").value;
+      var unit = document.getElementById("unit").value;
+      var result = document.getElementById("result");
+
+      if (isNaN(temperature)) {
+        result.innerHTML = "Invalid temperature. Please enter a valid number.";
+        return;
+      }
+
+      temperature = parseFloat(temperature);
+
+      if (unit === "celsius") {
+        result.innerHTML = temperature + " °C is " + convertToFahrenheit(temperature) + " °F or " + convertToKelvin(temperature) + " K";
+      } else if (unit === "fahrenheit") {
+        result.innerHTML = temperature + " °F is " + convertToCelsius(temperature) + " °C or " + convertToKelvin(convertToCelsius(temperature)) + " K";
+      } else if (unit === "kelvin") {
+        result.innerHTML = temperature + " K is " + convertToCelsius(temperature) + " °C or " + convertToFahrenheit(convertToCelsius(temperature)) + " °F";
+      }
+    }
+
+    function convertToCelsius(temperature) {
+      return ((temperature - 32) * 5/9).toFixed(2);
+    }
+
+    function convertToFahrenheit(temperature) {
+      return ((temperature * 9/5) + 32).toFixed(2);
+    }
+
+    function convertToKelvin(temperature) {
+      return (parseFloat(temperature) + 273.15).toFixed(2);
+    }
+  </script>
+</body>
+</html>
